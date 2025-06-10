@@ -1,0 +1,13 @@
+server:
+  AppVersion: 1.0.0
+  Port: localhost:8080
+  SSL: true
+
+
+
+postgres:
+  DBSource: {DBSource}
+
+
+cors:
+  AllowOrigins: [{AllowOrigins}]
