@@ -1,7 +1,13 @@
 package rstorage
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
-type RestaurantStore struct {
+type restaurantStore struct {
 	db *gorm.DB
+}
+
+func NewRestaurantStore(db *gorm.DB) *restaurantStore {
+	return &restaurantStore{db: db}
 }
