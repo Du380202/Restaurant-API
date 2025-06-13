@@ -3,7 +3,7 @@ package biz
 import rmodel "restaurant/internal/restaurant/model"
 
 type CreateRestaurantRepo interface {
-	CreateRestaurant(r *rmodel.Restaurant) error
+	Create(r *rmodel.Restaurant) error
 }
 
 type createRestaurantBiz struct {
@@ -15,7 +15,7 @@ func NewCreateRestaurantBiz(repo CreateRestaurantRepo) *createRestaurantBiz {
 }
 
 func (biz *createRestaurantBiz) CreateRestaurant(r *rmodel.Restaurant) error {
-	if err := biz.repo.CreateRestaurant(r); err != nil {
+	if err := biz.repo.Create(r); err != nil {
 		return err
 	}
 	return nil

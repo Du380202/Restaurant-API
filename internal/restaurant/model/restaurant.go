@@ -1,9 +1,10 @@
 package rmodel
 
 type Restaurant struct {
-	Id   int    `gorm:"column:id" json:"id"`
-	Name string `gorm:"column:name" json:"name"`
-	Addr string `gorm:"column:addr" json:"addr"`
+	Id     int    `gorm:"column:id" json:"id"`
+	Name   string `gorm:"column:name" json:"name"`
+	Addr   string `gorm:"column:addr" json:"addr"`
+	Status int    `gorm:"column:status" json:"status"`
 }
 
 func (Restaurant) TableName() string { return "restaurants" }
