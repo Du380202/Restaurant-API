@@ -18,9 +18,7 @@ func CreateRestaurant(appContext appctx.AppContext) func(c *gin.Context) {
 		var data rmodel.Restaurant
 
 		if err := c.ShouldBind(&data); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
-			})
+			c.JSON(http.StatusBadRequest, common.ErrorInvalidRequest(err))
 			return
 		}
 
