@@ -20,6 +20,7 @@ type ServerConfig struct {
 	AppVersion string
 	Port       string
 	SSL        bool
+	SecretKey  string
 }
 
 type Postgres struct {

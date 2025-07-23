@@ -63,13 +63,12 @@ func FromBase58(s string) (UID, error) {
 	return DecomposeUID(string(base58.Decode(s)))
 }
 
-func (uid UID) MarShalJson() ([]byte, error) {
+func (uid UID) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("\"%s\"", uid.String())), nil
 }
 
-func (uid *UID) UnmarshalJson(data []byte) error {
+func (uid *UID) UnmarshalJSON(data []byte) error {
 	decodeUID, err := FromBase58(strings.Replace(string(data), "\"", "", -1))
-
 	if err != nil {
 		return err
 	}
@@ -80,5 +79,3 @@ func (uid *UID) UnmarshalJson(data []byte) error {
 
 	return nil
 }
-
-

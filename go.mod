@@ -3,6 +3,8 @@ module restaurant
 go 1.24.0
 
 require (
+	github.com/btcsuite/btcutil v1.0.2
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.10.1
 	github.com/spf13/viper v1.20.1
 	gorm.io/driver/postgres v1.6.0
@@ -10,7 +12,6 @@ require (
 )
 
 require (
-	github.com/btcsuite/btcutil v1.0.2 // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect

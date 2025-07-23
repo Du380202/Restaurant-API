@@ -1,25 +1,36 @@
 package rmodel
 
+import "restaurant/common"
+
 type Restaurant struct {
-	Id     int    `gorm:"column:id" json:"id"`
-	Name   string `gorm:"column:name" json:"name"`
-	Addr   string `gorm:"column:addr" json:"addr"`
-	Status int    `gorm:"column:status;default:true" json:"status"`
+	common.SQLmodel
+	Name  string         `gorm:"column:name" json:"name"`
+	Addr  string         `gorm:"column:addr" json:"addr"`
+	Logo  *common.Image  `gorm:"column:logo" json:"logo"`
+	Cover *common.Images `gorm:"column:cover" json:"cover"`
 }
 
 func (Restaurant) TableName() string { return "restaurants" }
 
+func (r *Restaurant) Mask(isAdmin bool) {
+	r.GenUID(common.DbTypeRestaurant)
+}
+
 type RestaurantCreate struct {
-	Id   int    `gorm:"column:id" json:"id"`
-	Name string `gorm:"column:name" json:"name"`
-	Addr string `gorm:"column:addr" json:"addr"`
+	common.SQLmodel
+	Name  string         `gorm:"column:name" json:"name"`
+	Addr  string         `gorm:"column:addr" json:"addr"`
+	Logo  *common.Image  `gorm:"column:logo" json:"logo"`
+	Cover *common.Images `gorm:"column:cover" json:"cover"`
 }
 
 func (RestaurantCreate) TableName() string { return Restaurant{}.TableName() }
 
 type RestaurantUpdate struct {
-	Name *string `gorm:"column:name" json:"name"`
-	Addr *string `gorm:"column:addr" json:"addr"`
+	Name  *string        `gorm:"column:name" json:"name"`
+	Addr  *string        `gorm:"column:addr" json:"addr"`
+	Logo  *common.Image  `gorm:"column:logo" json:"logo"`
+	Cover *common.Images `gorm:"column:cover" json:"cover"`
 }
 
 func (RestaurantUpdate) TableName() string { return Restaurant{}.TableName() }
