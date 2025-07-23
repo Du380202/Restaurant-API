@@ -32,7 +32,7 @@ func CreateRestaurant(appContext appctx.AppContext) func(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusAccepted, common.SimpleSuccessResponse(data))
+		c.JSON(http.StatusCreated, common.SimpleSuccessResponse(data))
 
 	}
 }

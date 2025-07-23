@@ -63,12 +63,16 @@ func (e *AppError) Error() string {
 	return e.RootErr.Error()
 }
 
-func ErrDB(err error) *AppError{
+func ErrDB(err error) *AppError {
 	return NewErrorResponse(err, "error in db", err.Error(), "DB_ERROR")
 }
 
 func ErrorInvalidRequest(err error) *AppError {
 	return NewErrorResponse(err, "invalid request", err.Error(), "ErrInvalidRequest")
+}
+
+func ErrorNoPermission(err error) *AppError {
+	return NewErrorResponse(err, "permession denied", err.Error(), "ErrNoPermission")
 }
 
 func ErrInternal(err error) *AppError {
@@ -84,4 +88,3 @@ func ErrCannotListEntity(entity string, err error) *AppError {
 		fmt.Sprintf("ErrCannotList%s", entity),
 	)
 }
-

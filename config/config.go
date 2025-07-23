@@ -20,6 +20,7 @@ type ServerConfig struct {
 	AppVersion string
 	Port       string
 	SSL        bool
+	SecretKey  string
 }
 
 type Postgres struct {
@@ -40,7 +41,7 @@ func LoadConfig() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
 	viper.AddConfigPath(filepath.Join(wd, "config"))
-	viper.AddConfigPath(filepath.Join(wd, "..", "..", "config"))
+	viper.AddConfigPath(filepath.Join(wd, "..", "config"))
 
 	// Đọc file config, nếu lỗi thì dừng chương trình
 	if err := viper.ReadInConfig(); err != nil {
