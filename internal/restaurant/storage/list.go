@@ -20,6 +20,10 @@ func (s *restaurantStore) ListDataWithCondition(
 		return nil, err
 	}
 
+	for i := range moreKeys {
+		db = db.Preload(moreKeys[i])
+	}
+
 	if v := paging.FakeCursor; v != "" {
 		uid, err := common.FromBase58(v)
 
@@ -41,7 +45,7 @@ func (s *restaurantStore) ListDataWithCondition(
 	}
 
 	if len(listData) > 0 {
-		last := listData[len(listData) -1]
+		last := listData[len(listData)-1]
 		last.Mask(false)
 		paging.NextCursor = last.FakeId.String()
 	}

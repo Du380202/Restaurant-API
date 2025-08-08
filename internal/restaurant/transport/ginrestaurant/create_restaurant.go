@@ -15,12 +15,16 @@ func CreateRestaurant(appContext appctx.AppContext) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		db := appContext.GetMainDBConnection()
 
+		requester := c.MustGet(common.CurentUser).(common.Requester)
+
 		var data rmodel.Restaurant
 
 		if err := c.ShouldBind(&data); err != nil {
 			c.JSON(http.StatusBadRequest, common.ErrorInvalidRequest(err))
 			return
 		}
+
+		data.UserId = requester.GetUserId()
 
 		store := rstorage.NewRestaurantStore(db)
 		biz := biz.NewCreateRestaurantBiz(store)

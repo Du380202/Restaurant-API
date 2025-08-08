@@ -6,16 +6,19 @@ import (
 	"restaurant/component/appctx"
 	"restaurant/internal/restaurant/biz"
 	rstorage "restaurant/internal/restaurant/storage"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func DeleteRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		param := c.Param("id")
+		// param := c.Param("id")
 
-		id, err := strconv.Atoi(param)
+		requester := c.MustGet(common.CurentUser).(common.Requester)
+
+		// id, err := strconv.Atoi(param)
+
+		uid, err := common.FromBase58(c.Param("id"))
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -27,12 +30,10 @@ func DeleteRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 		db := appCtx.GetMainDBConnection()
 
 		store := rstorage.NewRestaurantStore(db)
-		biz := biz.NewDeleteRestaurantBiz(store)
+		biz := biz.NewDeleteRestaurantBiz(store, requester)
 
-		if err := biz.DeleteRestaurant(c, id); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
-			})
+		if err := biz.DeleteRestaurant(c, int(uid.GetLocalID())); err != nil {
+			c.JSON(http.StatusBadRequest, common.ErrorNoPermission(err))
 			return
 		}
 

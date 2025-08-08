@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"restaurant/component/appctx"
 	"restaurant/config"
-	"restaurant/internal/restaurant/transport/ginrestaurant"
-	"restaurant/internal/user/transport"
 	"restaurant/middleware"
 	"time"
 
@@ -33,15 +31,8 @@ func main() {
 
 	routerGr := r.Group("/api/v1")
 
-	routerGr.POST("/register", transport.Register(appCtx))
-
-	routerGr.POST("/login", transport.Login(appCtx))
-
-	routerGr.GET("/profile", middleware.RequireAuth(appCtx), transport.Profile(appCtx))
-
-	routerGr.GET("/restaurant", ginrestaurant.ListRestaurant(appCtx))
-
-	routerGr.POST("restaurant", ginrestaurant.CreateRestaurant(appCtx))
+	setupRouters(appCtx, routerGr)
+	setupAdminRouters(appCtx, routerGr)
 
 	port := config.AppConfig.Server.Port
 	server := &http.Server{
