@@ -3,6 +3,8 @@ package biz
 import (
 	"context"
 	"errors"
+	"fmt"
+	"restaurant/common"
 	rmodel "restaurant/internal/restaurant/model"
 )
 
@@ -16,11 +18,12 @@ type DeleteRestaurantStore interface {
 }
 
 type deleteRestaurantBiz struct {
-	store DeleteRestaurantStore
+	store     DeleteRestaurantStore
+	requester common.Requester
 }
 
-func NewDeleteRestaurantBiz(store DeleteRestaurantStore) *deleteRestaurantBiz {
-	return &deleteRestaurantBiz{store: store}
+func NewDeleteRestaurantBiz(store DeleteRestaurantStore, requester common.Requester) *deleteRestaurantBiz {
+	return &deleteRestaurantBiz{store: store, requester: requester}
 }
 
 func (biz *deleteRestaurantBiz) DeleteRestaurant(context context.Context, id int) error {
@@ -30,8 +33,13 @@ func (biz *deleteRestaurantBiz) DeleteRestaurant(context context.Context, id int
 		return err
 	}
 
-	if oldData.Status == 1 {
+	if oldData.Status == 0 {
 		return errors.New("data has been deleted")
+	}
+
+	if oldData.UserId != biz.requester.GetUserId() {
+		fmt.Println(oldData.UserId, biz.requester.GetUserId())
+		return common.ErrNoPermission(nil)
 	}
 
 	if err := biz.store.Delete(context, id); err != nil {

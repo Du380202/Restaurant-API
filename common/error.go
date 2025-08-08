@@ -75,6 +75,14 @@ func ErrorNoPermission(err error) *AppError {
 	return NewErrorResponse(err, "permession denied", err.Error(), "ErrNoPermission")
 }
 
+func ErrNoPermission(err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("You have no permission"),
+		fmt.Sprintf("ErrNoPermission"),
+	)
+}
+
 func ErrInternal(err error) *AppError {
 	return NewFullErrorResponse(http.StatusInternalServerError, err,
 		"error server", err.Error(), "ErrInternal",
