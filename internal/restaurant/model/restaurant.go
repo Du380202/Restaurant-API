@@ -18,7 +18,7 @@ type Restaurant struct {
 	Cover     *common.Images     `gorm:"column:cover" json:"cover"`
 	UserId    int                `gorm:"column:owner_id" json:"-"`
 	User      *common.SimpleUser `gorm:"preload:false" json:"user"`
-	LikeCount int                `gorm:"-" json:"like_count"`
+	LikeCount int                `gorm:"column:like_count" json:"like_count"`
 }
 
 func (Restaurant) TableName() string { return EntityName }

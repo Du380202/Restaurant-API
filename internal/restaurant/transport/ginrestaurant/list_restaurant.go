@@ -7,7 +7,6 @@ import (
 	"restaurant/internal/restaurant/biz"
 	rmodel "restaurant/internal/restaurant/model"
 	rstorage "restaurant/internal/restaurant/storage"
-	"restaurant/internal/restaurantlike/storage"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,8 +28,8 @@ func ListRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 		}
 
 		store := rstorage.NewRestaurantStore(db)
-		likeStore := storage.NewSqlStore(db)
-		biz := biz.NewListRestaurantBiz(store, likeStore)
+		// likeStore := storage.NewSqlStore(db)
+		biz := biz.NewListRestaurantBiz(store)
 
 		result, err := biz.ListRestaurant(c, &filter, &paging)
 

@@ -2,7 +2,6 @@ package biz
 
 import (
 	"context"
-	"log"
 	"restaurant/common"
 	rmodel "restaurant/internal/restaurant/model"
 )
@@ -16,17 +15,17 @@ type ListRestaurantStore interface {
 	) ([]rmodel.Restaurant, error)
 }
 
-type LikeRestaurantStore interface {
-	GetRestaurantLikes(ctx context.Context, ids []int) (map[int]int, error)
-}
+// type LikeRestaurantStore interface {
+// 	GetRestaurantLikes(ctx context.Context, ids []int) (map[int]int, error)
+// }
 
 type listRestaurantBiz struct {
-	store     ListRestaurantStore
-	likeStore LikeRestaurantStore
+	store ListRestaurantStore
+	// likeStore LikeRestaurantStore
 }
 
-func NewListRestaurantBiz(store ListRestaurantStore, likeStore LikeRestaurantStore) *listRestaurantBiz {
-	return &listRestaurantBiz{store: store, likeStore: likeStore}
+func NewListRestaurantBiz(store ListRestaurantStore) *listRestaurantBiz {
+	return &listRestaurantBiz{store: store}
 }
 
 func (biz *listRestaurantBiz) ListRestaurant(
@@ -40,22 +39,22 @@ func (biz *listRestaurantBiz) ListRestaurant(
 		return nil, err
 	}
 
-	ids := make([]int, len(result))
+	// ids := make([]int, len(result))
 
-	for i := range result {
-		ids[i] = result[i].Id
-	}
+	// for i := range result {
+	// 	ids[i] = result[i].Id
+	// }
 
-	likeMap, err := biz.likeStore.GetRestaurantLikes(context, ids)
+	// likeMap, err := biz.likeStore.GetRestaurantLikes(context, ids)
 
-	if err != nil {
-		log.Println(err)
-		return result, nil
-	}
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return result, nil
+	// }
 
-	for i, item := range result {
-		result[i].LikeCount = likeMap[item.Id]
-	}
+	// for i, item := range result {
+	// 	result[i].LikeCount = likeMap[item.Id]
+	// }
 
 	return result, nil
 }
