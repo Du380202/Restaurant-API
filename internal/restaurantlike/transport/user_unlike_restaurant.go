@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"restaurant/common"
 	"restaurant/component/appctx"
+	rstorage "restaurant/internal/restaurant/storage"
 	"restaurant/internal/restaurantlike/biz"
 	"restaurant/internal/restaurantlike/storage"
 
@@ -21,7 +22,8 @@ func UserUnLikeRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 		requester := ctx.MustGet(common.CurentUser).(common.Requester)
 
 		store := storage.NewSqlStore(appCtx.GetMainDBConnection())
-		biz := biz.NewUserUnLikeRestaurantBiz(store)
+		deStore := rstorage.NewRestaurantStore(appCtx.GetMainDBConnection())
+		biz := biz.NewUserUnLikeRestaurantBiz(store, deStore)
 
 		if err := biz.UnlikeRestaurant(ctx, requester.GetUserId(), int(uid.GetLocalID())); err != nil {
 			panic(err)

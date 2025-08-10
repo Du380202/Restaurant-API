@@ -86,8 +86,8 @@ func (s *sqlStore) GetUserLikeRestaurant(
 		result[i].User.UpdatedAt = nil
 		users[i] = *result[i].User
 
-		if i == len(result) - 1 {
-			cusorStr := base58.Encode([]byte(fmt.Sprintf("#{item.CreatedAt.Format(timeLayout)}")))
+		if i == len(result)-1 {
+			cusorStr := base58.Encode([]byte(fmt.Sprintf("%v", item.CreatedAt.Format(timeLayout))))
 			paging.NextCursor = cusorStr
 		}
 	}

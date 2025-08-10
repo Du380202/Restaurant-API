@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"restaurant/common"
 	"restaurant/component/appctx"
+	rstorage "restaurant/internal/restaurant/storage"
 	"restaurant/internal/restaurantlike/biz"
 	"restaurant/internal/restaurantlike/model"
 	"restaurant/internal/restaurantlike/storage"
@@ -27,7 +28,8 @@ func UserLikeRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 		}
 
 		store := storage.NewSqlStore(appCtx.GetMainDBConnection())
-		biz := biz.NewUserLikeRestaurantBiz(store)
+		inStore := rstorage.NewRestaurantStore(appCtx.GetMainDBConnection())
+		biz := biz.NewUserLikeRestaurantBiz(store, inStore)
 
 		if err := biz.LikeRestaurant(ctx, &data); err != nil {
 			panic(err)
