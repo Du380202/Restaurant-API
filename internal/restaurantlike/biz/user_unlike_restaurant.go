@@ -13,7 +13,7 @@ type UserUnlikeRestaurantStore interface {
 }
 
 type DecreaseLikeCountStore interface {
-	IncreaseLikeCount(c context.Context, id int) error
+	DecreaseLikeCount(c context.Context, id int) error
 }
 
 type userUnlikeRestaurantBiz struct {
@@ -35,8 +35,15 @@ func (biz *userUnlikeRestaurantBiz) UnlikeRestaurant(ctx context.Context, userId
 	go func() {
 		defer common.AppRecover()
 		time.Sleep(time.Second * 3)
-		if err := biz.decrease.IncreaseLikeCount(ctx, restaurantId); err != nil {
+		if err := biz.decrease.DecreaseLikeCount(ctx, restaurantId); err != nil {
 			log.Println(err)
+		}
+
+		for {
+			err := biz.decrease.DecreaseLikeCount(ctx, restaurantId)
+			if err != nil {
+				break
+			}
 		}
 	}()
 

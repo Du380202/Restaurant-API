@@ -35,6 +35,6 @@ func UserLikeRestaurant(appCtx appctx.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
-		ctx.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
+		ctx.JSON(http.StatusOK, common.SimpleSuccessResponse(true))
 	}
 }
