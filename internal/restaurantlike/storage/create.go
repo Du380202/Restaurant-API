@@ -13,7 +13,7 @@ func (s *sqlStore) Create(context context.Context, r *model.Like) error {
 	}
 
 	if true {
-		fmt.Print("abc")
+		fmt.Print("abc", "janjksnd")
 	}
 
 	return nil
