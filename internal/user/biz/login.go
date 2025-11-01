@@ -40,7 +40,7 @@ func (biz *loginBusiness) Login(ctx context.Context, data *model.UserLogin) (*to
 	passHashed := biz.hasher.Hash(data.Password + user.Salt)
 
 	if user.Password != passHashed {
-		return nil, errors.New("password is incorrect")
+		return nil, errors.New("password not found")
 	}
 
 	payload := tokenprovider.TokenPayload{
